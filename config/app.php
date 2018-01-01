@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Ibonly\FacebookAccountKit\FacebookAccountKitServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -176,7 +177,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        
     ],
 
     /*
@@ -226,7 +227,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Pusher' => Pusher\Laravel\Facades\Pusher::class,
+        'AccountKit' => Ibonly\FacebookAccountKit\Facades\FacebookAccountKitFacade::class,
     ],
 
 ];

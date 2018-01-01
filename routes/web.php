@@ -17,3 +17,10 @@ Route::get('oauth/{provider}/callback', 'Api\AuthController@handleProviderCallba
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/notification', function (){
+    $user = App\User::find(1);
+    broadcast(new App\Events\UserNotification($user));
+    $user->notify(new App\Notifications\PromotionNotification);
+    return view('welcome');
+});

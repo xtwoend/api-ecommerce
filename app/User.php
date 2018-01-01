@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, HasPushSubscriptions;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +28,11 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function inbox()
+    {
+        return $this->hasMany(\App\Inbox::class, 'user_id');
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use AccountKit;
 
 class AuthController extends Controller
 {
@@ -73,7 +74,7 @@ class AuthController extends Controller
            'email' => $user->getEmail()
        ];
        $token = $this->oauthRegister($data);
-       setcookie('token', $token , time() + (86400 * 30), "/"); 
+       setcookie('UUID', $token , time() + (86400 * 30), "/"); 
        return redirect()->to('http://localhost:3000');
    }
 
@@ -89,4 +90,18 @@ class AuthController extends Controller
         }
        return JWTAuth::fromUser($user);
    }
+
+    public function otp(Request $request)
+    {
+        $user = AccountKit::accountKitData($request->code);
+        
+        $data = [
+            'name' => $user['id'],
+            'email' => $user['phoneNumber'],
+        ];
+
+        $token =  $this->oauthRegister($data);
+
+        return response()->json(['token' => $token]);
+    }
 }
